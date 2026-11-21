@@ -73,7 +73,7 @@ a.paket-card:hover .paket-cta{background:#D3303F}
 .sl-dot::before{content:"";position:absolute;top:50%;left:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#BCC7D8;transition:background .2s,width .2s,margin .2s}
 .sl-dot[aria-current="true"]::before{background:#D3303F;width:22px;margin-left:-11px;border-radius:6px}
 
-@media (max-width:760px){.sl-wrap{margin-left:auto;margin-right:auto;flex-basis:auto}}
+@media (max-width:760px){.sl-wrap{margin-left:auto;margin-right:auto;flex-basis:auto}.slide{overflow:hidden}.slide img{width:109.36%;max-width:none;margin-left:-9.36%}}
 
 @media (prefers-reduced-motion:reduce){
   .hero-bg,.rise{animation:none!important}
@@ -289,9 +289,9 @@ a.paket-card:hover .paket-cta{background:#D3303F}
 <!-- SLIDER CONTOH PERCAKAPAN WHATSAPP -->
 <div class="sl-wrap">
   <div class="slider" id="sl" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Contoh pengingat otomatis WhatsApp">
-    <figure class="slide"><picture><source media="(max-width:760px)" srcset="assets/reminder-laundry-m.jpg" width="900" height="1230"><img src="assets/reminder-laundry.jpg" width="900" height="1125"None alt="Contoh percakapan WhatsApp laundry: pelanggan minta jemput cucian, lalu menerima pengingat otomatis H-1"></picture></figure>
-    <figure class="slide"><picture><source media="(max-width:760px)" srcset="assets/reminder-bengkel-m.jpg" width="900" height="1230"><img src="assets/reminder-bengkel.jpg" width="900" height="1125" loading="lazy" alt="Contoh percakapan WhatsApp bengkel: pelanggan booking servis motor, lalu menerima pengingat otomatis H-1"></picture></figure>
-    <figure class="slide"><picture><source media="(max-width:760px)" srcset="assets/reminder-salon-m.jpg" width="900" height="1230"><img src="assets/reminder-salon.jpg" width="900" height="1125" loading="lazy" alt="Contoh percakapan WhatsApp salon: pelanggan booking potong rambut, lalu menerima pengingat otomatis H-1"></picture></figure>
+    <figure class="slide"><img src="assets/reminder-laundry.jpg" width="900" height="1125"None alt="Contoh percakapan WhatsApp laundry: pelanggan minta jemput cucian, lalu menerima pengingat otomatis H-1"></figure>
+    <figure class="slide"><img src="assets/reminder-bengkel.jpg" width="900" height="1125" loading="lazy" alt="Contoh percakapan WhatsApp bengkel: pelanggan booking servis motor, lalu menerima pengingat otomatis H-1"></figure>
+    <figure class="slide"><img src="assets/reminder-salon.jpg" width="900" height="1125" loading="lazy" alt="Contoh percakapan WhatsApp salon: pelanggan booking potong rambut, lalu menerima pengingat otomatis H-1"></figure>
   </div>
   <div class="sl-nav">
     <button class="sl-btn" id="sl-prev" type="button" aria-label="Contoh sebelumnya"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>

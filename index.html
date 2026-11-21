@@ -53,9 +53,31 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
   .paket-card{flex:0 0 min(82%,320px);scroll-snap-align:start}
 }
 
+/* kartu paket bisa diklik ke WhatsApp */
+a.paket-card{text-decoration:none;color:inherit;cursor:pointer;transition:transform .2s,box-shadow .2s}
+a.paket-card:hover{transform:translateY(-4px);box-shadow:0 10px 24px rgba(22,32,47,.14)}
+.paket-cta{display:flex;align-items:center;justify-content:center;min-height:48px;margin-top:4px;border-radius:999px;background:#16202F;color:#FFFFFF;font-weight:700;font-size:15px;transition:background .2s}
+a.paket-card:hover .paket-cta{background:#D3303F}
+
+/* slider contoh percakapan */
+.sl-wrap{position:relative;flex:0 1 340px;width:100%;max-width:340px;min-width:0}
+.slider{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;border-radius:20px;background:#F3F5F8}
+.slider::-webkit-scrollbar{display:none}
+.slide{flex:0 0 100%;scroll-snap-align:center;margin:0}
+.slide img{display:block;width:100%;height:auto}
+.sl-nav{display:flex;align-items:center;justify-content:center;gap:4px;margin-top:10px}
+.sl-btn{width:44px;height:44px;border:0;border-radius:50%;background:#F3F5F8;color:#16202F;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:background .2s,color .2s}
+.sl-btn:hover:not(:disabled){background:#D3303F;color:#FFFFFF}
+.sl-btn:disabled{opacity:.35;cursor:default}
+.sl-dot{width:28px;height:44px;border:0;background:transparent;padding:0;cursor:pointer;position:relative}
+.sl-dot::before{content:"";position:absolute;top:50%;left:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#BCC7D8;transition:background .2s,width .2s,margin .2s}
+.sl-dot[aria-current="true"]::before{background:#D3303F;width:22px;margin-left:-11px;border-radius:6px}
+
 @media (prefers-reduced-motion:reduce){
   .hero-bg,.rise{animation:none!important}
   html{scroll-behavior:auto}
+  a.paket-card{transition:none}
+  a.paket-card:hover{transform:none}
 }
 </style>
 
@@ -65,6 +87,17 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 .ic-dark:hover{background:#D3303F}
 .ic-light{background:#F3F5F8;color:#16202F}
 .ic-light:hover{background:#D3303F;color:#FFFFFF}
+</style>
+<style>
+#cs{font-family:'Plus Jakarta Sans',system-ui,sans-serif;font-size:16px;line-height:1.5;position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));z-index:50;display:flex;flex-direction:column;align-items:flex-end;gap:12px;pointer-events:none}
+#cs>*{pointer-events:auto}
+.cs-fab{width:60px;height:60px;border-radius:50%;border:0;background:#1FB85A;color:#FFFFFF;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 8px 22px rgba(10,16,28,.28);transition:transform .2s,background .2s}
+.cs-fab:hover{background:#18A04E;transform:scale(1.05)}
+.cs-pop{width:min(320px,calc(100vw - 32px));background:#FFFFFF;color:#16202F;border-radius:20px;box-shadow:0 14px 40px rgba(10,16,28,.28);overflow:hidden;animation:rise .35s cubic-bezier(.2,.7,.2,1) both}
+.cs-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#16202F;color:#FFFFFF}
+.cs-x{margin-left:auto;width:44px;height:44px;margin-top:-8px;margin-bottom:-8px;margin-right:-10px;border:0;background:transparent;color:#C4CEDB;cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.cs-x:hover{color:#FFFFFF;background:rgba(255,255,255,.12)}
+@media (prefers-reduced-motion:reduce){.cs-pop{animation:none!important}.cs-fab{transition:none}}
 </style>
 <style>[hidden]{display:none!important}img{max-width:100%}</style>
 </head>
@@ -125,15 +158,15 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 </div>
 <div style="flex:1 1 360px;min-width:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:20px">
 <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:20px;background:#F3F5F8;border-radius:16px">
-<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16202F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"></path><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8c-.8-.4-1.600-1.200-2-2l.8-1-1-2z"></path></svg>
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16202F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"></path><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8c-.8-.4-1.6-1.2-2-2l.8-1-1-2z"></path></svg>
 <span style="font-weight:700">Lewat WhatsApp</span>
 </div>
 <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:20px;background:#F3F5F8;border-radius:16px">
-<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16202F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.500" y="5" width="17" height="15.500" rx="2.500"></rect><path d="M3.500 10h17M8 3v4M16 3v4"></path></svg>
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16202F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>
 <span style="font-weight:700">Setup hitungan hari</span>
 </div>
 <div style="display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:20px;background:#F3F5F8;border-radius:16px">
-<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16202F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.500"></circle><path d="M2.500 20c0-3.600 2.900-6 6.500-6s6.500 2.400 6.500 6"></path><circle cx="17" cy="9" r="2.500"></circle><path d="M17 14c2.600 0 4.500 1.800 4.500 4.500"></path></svg>
+<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16202F" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"></path><circle cx="17" cy="9" r="2.5"></circle><path d="M17 14c2.6 0 4.5 1.8 4.5 4.5"></path></svg>
 <span style="font-weight:700">Didampingi dari awal</span>
 </div>
 </div>
@@ -146,20 +179,20 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 <div style="flex:1 1 340px;min-width:0;background:#F3F5F8;border-radius:20px;padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;gap:18px">
 <h3 style="margin:0;font-weight:800;font-size:22px">Masalah yang sering dialami</h3>
 <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px">
-<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B4202F" stroke-width="2.200" stroke-linecap="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg><span>Pelanggan lupa jadwal atau tidak datang tanpa kabar</span></li>
-<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B4202F" stroke-width="2.200" stroke-linecap="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg><span>Waktu habis membalas chat dan mengatur jadwal satu per satu</span></li>
-<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B4202F" stroke-width="2.200" stroke-linecap="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg><span>Jadwal bentrok atau pesanan terlewat</span></li>
-<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B4202F" stroke-width="2.200" stroke-linecap="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg><span>Pelanggan lama tidak kembali dan tidak ada yang menghubungi mereka</span></li>
+<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B4202F" stroke-width="2.2" stroke-linecap="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg><span>Pelanggan lupa jadwal atau tidak datang tanpa kabar</span></li>
+<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B4202F" stroke-width="2.2" stroke-linecap="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg><span>Waktu habis membalas chat dan mengatur jadwal satu per satu</span></li>
+<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B4202F" stroke-width="2.2" stroke-linecap="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg><span>Jadwal bentrok atau pesanan terlewat</span></li>
+<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#B4202F" stroke-width="2.2" stroke-linecap="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg><span>Pelanggan lama tidak kembali dan tidak ada yang menghubungi mereka</span></li>
 </ul>
 </div>
 <div style="flex:1.2 1 400px;min-width:0;background:#16202F;color:#FFFFFF;border-radius:20px;padding:clamp(24px,3vw,36px);display:flex;flex-direction:column;gap:18px">
 <h3 style="margin:0;font-weight:800;font-size:22px">Solusi kami</h3>
 <p style="margin:0;color:#C4CEDB;font-size:15px">Semua berjalan lewat WhatsApp, alat yang sudah Anda pakai setiap hari, jadi tidak perlu belajar aplikasi baru.</p>
 <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px">
-<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6B79" stroke-width="2.400" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.500l4.500 4.500L19 7.500"></path></svg><span><b style="font-weight:700">Booking mudah:</b> pelanggan pesan lewat tombol WhatsApp atau form online</span></li>
-<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6B79" stroke-width="2.400" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.500l4.500 4.500L19 7.500"></path></svg><span><b style="font-weight:700">Pengingat otomatis:</b> pelanggan diingatkan sebelum jadwal sehingga yang batal berkurang</span></li>
-<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6B79" stroke-width="2.400" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.500l4.500 4.500L19 7.500"></path></svg><span><b style="font-weight:700">Rekap rapi:</b> semua booking tercatat otomatis di Google Sheets</span></li>
-<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6B79" stroke-width="2.400" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.500l4.500 4.500L19 7.500"></path></svg><span><b style="font-weight:700">Follow-up pelanggan lama:</b> pesan otomatis agar pelanggan kembali datang</span></li>
+<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6B79" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span><b style="font-weight:700">Booking mudah:</b> pelanggan pesan lewat tombol WhatsApp atau form online</span></li>
+<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6B79" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span><b style="font-weight:700">Pengingat otomatis:</b> pelanggan diingatkan sebelum jadwal sehingga yang batal berkurang</span></li>
+<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6B79" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span><b style="font-weight:700">Rekap rapi:</b> semua booking tercatat otomatis di Google Sheets</span></li>
+<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FF6B79" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span><b style="font-weight:700">Follow-up pelanggan lama:</b> pesan otomatis agar pelanggan kembali datang</span></li>
 </ul>
 </div>
 </div>
@@ -181,7 +214,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 </div>
 <div class="paket-row">
 
-<div class="paket-card" style="min-width:0;border:1px solid #CBDDF0;border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:20px;background:#EAF2FB">
+<a class="paket-card" href="https://wa.me/6289637464523?text=Halo%20KIN%2C%20saya%20tertarik%20dengan%20paket%20Starter.%20Boleh%20tanya%20dulu%3F" style="min-width:0;border:1px solid #CBDDF0;border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:20px;background:#EAF2FB">
 <h3 style="margin:0;font-weight:800;font-size:26px">Starter</h3>
 <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;flex:1;color:#4A5668">
 <li>Halaman profil usaha</li>
@@ -192,9 +225,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 <div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#4A5668">Kisaran setup</span><span style="font-weight:700;font-size:18px">Rp300.000 – 500.000</span></div>
 <div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#4A5668">Kisaran per bulan</span><span style="font-weight:700;font-size:18px">Rp100.000 – 150.000</span></div>
 </div>
-</div>
+<span class="paket-cta">Pilih paket ini lewat WhatsApp</span>
+</a>
 
-<div class="paket-card" style="min-width:0;border:2px solid #16202F;border-radius:20px;padding:27px;display:flex;flex-direction:column;gap:20px;background:#ECEBF8">
+<a class="paket-card" href="https://wa.me/6289637464523?text=Halo%20KIN%2C%20saya%20tertarik%20dengan%20paket%20Growth.%20Boleh%20tanya%20dulu%3F" style="min-width:0;border:2px solid #16202F;border-radius:20px;padding:27px;display:flex;flex-direction:column;gap:20px;background:#ECEBF8">
 <h3 style="margin:0;font-weight:800;font-size:26px">Growth</h3>
 <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;flex:1;color:#4A5668">
 <li>Semua isi Starter, ditambah:</li>
@@ -206,9 +240,10 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 <div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#4A5668">Kisaran setup</span><span style="font-weight:700;font-size:18px">Rp700.000 – 1.200.000</span></div>
 <div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#4A5668">Kisaran per bulan</span><span style="font-weight:700;font-size:18px">Rp250.000 – 400.000</span></div>
 </div>
-</div>
+<span class="paket-cta">Pilih paket ini lewat WhatsApp</span>
+</a>
 
-<div class="paket-card" style="min-width:0;border:1px solid #BCC7D8;border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:20px;background:#E2E7EF">
+<a class="paket-card" href="https://wa.me/6289637464523?text=Halo%20KIN%2C%20saya%20tertarik%20dengan%20paket%20Pro.%20Boleh%20tanya%20dulu%3F" style="min-width:0;border:1px solid #BCC7D8;border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:20px;background:#E2E7EF">
 <h3 style="margin:0;font-weight:800;font-size:26px">Pro</h3>
 <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;flex:1;color:#4A5668">
 <li>Semua isi Growth, ditambah:</li>
@@ -221,7 +256,8 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 <div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#4A5668">Kisaran setup</span><span style="font-weight:700;font-size:18px">Rp1.500.000 – 2.500.000</span></div>
 <div style="display:flex;flex-direction:column"><span style="font-size:13px;color:#4A5668">Kisaran per bulan</span><span style="font-weight:700;font-size:18px">Rp500.000 – 800.000</span></div>
 </div>
-</div>
+<span class="paket-cta">Pilih paket ini lewat WhatsApp</span>
+</a>
 
 </div>
 <div style="display:flex;flex-wrap:wrap;gap:24px 40px;align-items:center;padding:clamp(20px,3vw,32px);background:#F3F5F8;border-radius:20px">
@@ -248,32 +284,38 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 </div>
 <div style="display:flex;flex-wrap:wrap;gap:28px 32px;align-items:flex-start">
 
-<div style="position:relative;flex:0 1 270px;width:100%;max-width:300px;min-width:0">
-<div style="background:#F3F5F8;border-radius:20px;padding:14px;display:flex;flex-direction:column;gap:10px;font-size:14px;line-height:1.45">
-<span style="font-size:12px;font-weight:600;color:#4A5668">Contoh percakapan WhatsApp</span>
-<div style="align-self:flex-end;max-width:84%;padding:9px 13px;background:#DCE8F7;border-radius:14px 14px 2px 14px">Besok jam 10 bisa potong rambut?</div>
-<div style="align-self:flex-start;max-width:88%;padding:9px 13px;background:#FFFFFF;border-radius:14px 14px 14px 2px">Bisa, Kak. Sudah kami catat untuk besok pukul 10.00.</div>
-<div style="align-self:center;padding:2px 12px;background:#DCE2EA;border-radius:20px;font-size:12px;font-weight:600;color:#3C4859">H-1 · pengingat otomatis</div>
-<div style="align-self:flex-start;max-width:92%;padding:9px 13px;background:#FFFFFF;border-radius:14px 14px 14px 2px">Pengingat: jadwal Anda besok pukul 10.00. Balas BATAL jika berhalangan.</div>
-</div>
-<div style="position:absolute;top:-18px;right:-10px;width:86px;height:86px;border-radius:50%;background:#D3303F;color:#FFFFFF;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:700;font-size:14px;line-height:1.2;padding:8px;box-sizing:border-box">Konsultasi gratis</div>
+<!-- SLIDER CONTOH PERCAKAPAN WHATSAPP -->
+<div class="sl-wrap">
+  <div class="slider" id="sl" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Contoh pengingat otomatis WhatsApp">
+    <figure class="slide"><img src="assets/reminder-laundry.jpg" width="900" height="1125" alt="Contoh percakapan WhatsApp laundry: pelanggan minta jemput cucian, lalu menerima pengingat otomatis H-1"></figure>
+    <figure class="slide"><img src="assets/reminder-bengkel.jpg" width="900" height="1125" loading="lazy" alt="Contoh percakapan WhatsApp bengkel: pelanggan booking servis motor, lalu menerima pengingat otomatis H-1"></figure>
+    <figure class="slide"><img src="assets/reminder-salon.jpg" width="900" height="1125" loading="lazy" alt="Contoh percakapan WhatsApp salon: pelanggan booking potong rambut, lalu menerima pengingat otomatis H-1"></figure>
+  </div>
+  <div class="sl-nav">
+    <button class="sl-btn" id="sl-prev" type="button" aria-label="Contoh sebelumnya"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"></path></svg></button>
+    <button class="sl-dot" type="button" aria-label="Contoh 1: laundry" aria-current="true"></button>
+    <button class="sl-dot" type="button" aria-label="Contoh 2: bengkel" aria-current="false"></button>
+    <button class="sl-dot" type="button" aria-label="Contoh 3: salon" aria-current="false"></button>
+    <button class="sl-btn" id="sl-next" type="button" aria-label="Contoh berikutnya"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"></path></svg></button>
+  </div>
+  <div style="position:absolute;top:-18px;right:-10px;width:86px;height:86px;border-radius:50%;background:#D3303F;color:#FFFFFF;display:flex;align-items:center;justify-content:center;text-align:center;font-weight:700;font-size:14px;line-height:1.2;padding:8px;box-sizing:border-box;z-index:2">Konsultasi gratis</div>
 </div>
 
 <ol style="flex:1 1 280px;min-width:0;margin:0;padding:0;list-style:none;display:flex;flex-direction:column">
 <li style="display:flex;gap:14px;padding:0 0 18px;border-bottom:1px solid #DCE2EA">
-<span style="flex:none;width:44px;height:44px;border-radius:50%;background:#16202F;color:#FFFFFF;display:flex;align-items:center;justify-content:center" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.800" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"></path></svg></span>
+<span style="flex:none;width:44px;height:44px;border-radius:50%;background:#16202F;color:#FFFFFF;display:flex;align-items:center;justify-content:center" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"></path></svg></span>
 <div style="display:flex;flex-direction:column"><b style="font-weight:700">Konsultasi singkat</b><span style="color:#4A5668;font-size:15px">Kami pelajari cara Anda menerima booking saat ini.</span></div>
 </li>
 <li style="display:flex;gap:14px;padding:18px 0;border-bottom:1px solid #DCE2EA">
-<span style="flex:none;width:44px;height:44px;border-radius:50%;background:#16202F;color:#FFFFFF;display:flex;align-items:center;justify-content:center" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.800" stroke-linecap="round"><path d="M5 6h14M5 12h14M5 18h14"></path><circle cx="9" cy="6" r="2" fill="#16202F"></circle><circle cx="15" cy="12" r="2" fill="#16202F"></circle><circle cx="8" cy="18" r="2" fill="#16202F"></circle></svg></span>
+<span style="flex:none;width:44px;height:44px;border-radius:50%;background:#16202F;color:#FFFFFF;display:flex;align-items:center;justify-content:center" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 6h14M5 12h14M5 18h14"></path><circle cx="9" cy="6" r="2" fill="#16202F"></circle><circle cx="15" cy="12" r="2" fill="#16202F"></circle><circle cx="8" cy="18" r="2" fill="#16202F"></circle></svg></span>
 <div style="display:flex;flex-direction:column"><b style="font-weight:700">Penyesuaian</b><span style="color:#4A5668;font-size:15px">Kami atur sistem sesuai jenis usaha dan jam operasional Anda.</span></div>
 </li>
 <li style="display:flex;gap:14px;padding:18px 0;border-bottom:1px solid #DCE2EA">
-<span style="flex:none;width:44px;height:44px;border-radius:50%;background:#16202F;color:#FFFFFF;display:flex;align-items:center;justify-content:center" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.800" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.500"></circle><path d="M8 12.500l3 3 5-6"></path></svg></span>
+<span style="flex:none;width:44px;height:44px;border-radius:50%;background:#16202F;color:#FFFFFF;display:flex;align-items:center;justify-content:center" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"></circle><path d="M8 12.5l3 3 5-6"></path></svg></span>
 <div style="display:flex;flex-direction:column"><b style="font-weight:700">Pemasangan</b><span style="color:#4A5668;font-size:15px">Sistem terpasang dan diuji, target selesai dalam hitungan hari.</span></div>
 </li>
 <li style="display:flex;gap:14px;padding:18px 0 0">
-<span style="flex:none;width:44px;height:44px;border-radius:50%;background:#16202F;color:#FFFFFF;display:flex;align-items:center;justify-content:center" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.800" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.500"></circle><path d="M2.500 20c0-3.600 2.900-6 6.500-6s6.500 2.400 6.500 6"></path><circle cx="17" cy="9" r="2.500"></circle><path d="M17 14c2.600 0 4.500 1.800 4.500 4.500"></path></svg></span>
+<span style="flex:none;width:44px;height:44px;border-radius:50%;background:#16202F;color:#FFFFFF;display:flex;align-items:center;justify-content:center" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"></path><circle cx="17" cy="9" r="2.5"></circle><path d="M17 14c2.6 0 4.5 1.8 4.5 4.5"></path></svg></span>
 <div style="display:flex;flex-direction:column"><b style="font-weight:700">Pendampingan</b><span style="color:#4A5668;font-size:15px">Kami bantu Anda dan tim memakainya, lalu terus siap membantu tiap bulan.</span></div>
 </li>
 </ol>
@@ -283,11 +325,11 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 <div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:20px;padding:clamp(24px,3vw,32px);background:#F3F5F8;border-radius:20px">
 <h2 style="margin:0;font-weight:800;font-size:clamp(26px,3vw,32px);line-height:1.1;letter-spacing:-0.02em">Kenapa Memilih Kami</h2>
 <ul style="margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:16px">
-<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D3303F" stroke-width="2.400" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.500l4.500 4.500L19 7.500"></path></svg><span><b style="font-weight:700">Paham usaha lokal,</b> bukan sekadar menjual software</span></li>
-<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D3303F" stroke-width="2.400" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.500l4.500 4.500L19 7.500"></path></svg><span><b style="font-weight:700">Setup cepat,</b> hitungan hari, bukan minggu</span></li>
-<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D3303F" stroke-width="2.400" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.500l4.500 4.500L19 7.500"></path></svg><span><b style="font-weight:700">Tanpa ribet,</b> semua lewat WhatsApp</span></li>
-<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D3303F" stroke-width="2.400" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.500l4.500 4.500L19 7.500"></path></svg><span><b style="font-weight:700">Ada yang mendampingi,</b> Anda tidak ditinggal setelah sistem terpasang</span></li>
-<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D3303F" stroke-width="2.400" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.500l4.500 4.500L19 7.500"></path></svg><span><b style="font-weight:700">Biaya ringan,</b> langganan bulanan tanpa kontrak panjang</span></li>
+<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D3303F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span><b style="font-weight:700">Paham usaha lokal,</b> bukan sekadar menjual software</span></li>
+<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D3303F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span><b style="font-weight:700">Setup cepat,</b> hitungan hari, bukan minggu</span></li>
+<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D3303F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span><b style="font-weight:700">Tanpa ribet,</b> semua lewat WhatsApp</span></li>
+<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D3303F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span><b style="font-weight:700">Ada yang mendampingi,</b> Anda tidak ditinggal setelah sistem terpasang</span></li>
+<li style="display:flex;gap:12px;align-items:flex-start"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D3303F" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="flex:none;margin-top:2px" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><span><b style="font-weight:700">Biaya ringan,</b> langganan bulanan tanpa kontrak panjang</span></li>
 </ul>
 </div>
 
@@ -315,16 +357,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 <div style="flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:14px">
 <h2 style="margin:0;font-weight:800;font-size:clamp(28px,3.6vw,40px);line-height:1.1;letter-spacing:-0.02em;text-wrap:balance">Tertarik atau ingin bertanya dulu?</h2>
 <p style="margin:0;color:#C4CEDB">Hubungi kami dan kami jadwalkan konsultasi singkat tanpa biaya.</p>
-<div style="display:flex;flex-direction:column;gap:16px;margin-top:6px">
-<div style="display:flex;align-items:center;gap:14px;min-width:0">
-<a class="ic ic-dark" href="https://wa.me/6289637464523?text=Halo%20KIN%2C%20saya%20ingin%20tanya%20dulu." aria-label="Chat WhatsApp KIN"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"></path><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8c-.8-.4-1.6-1.2-2-2l.8-1-1-2z"></path></svg></a>
-<div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:13px;color:#AEB9C9">WhatsApp</span><span style="font-weight:700;font-size:17px;user-select:all">0896-3746-4523</span></div>
-</div>
-<div style="display:flex;align-items:center;gap:14px;min-width:0">
-<a class="ic ic-dark" href="mailto:getkinusantara@gmail.com" aria-label="Kirim email ke KIN"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"></rect><path d="M3.5 7.5l8.5 6 8.5-6"></path></svg></a>
-<div style="display:flex;flex-direction:column;min-width:0"><span style="font-size:13px;color:#AEB9C9">Email</span><span style="font-weight:700;font-size:17px;word-break:break-all;user-select:all">getkinusantara@gmail.com</span></div>
-</div>
-</div>
 </div>
 <div style="flex:1.2 1 340px;min-width:0;display:flex;flex-direction:column;gap:14px">
 <div style="display:flex;flex-direction:column;gap:6px">
@@ -370,6 +402,21 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
 
 </div>
 
+<div id="cs">
+<div class="cs-pop" id="cs-pop" role="dialog" aria-labelledby="cs-title" hidden>
+<div class="cs-head">
+<span style="flex:none;width:40px;height:40px;border-radius:50%;background:#D3303F;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px" aria-hidden="true">K</span>
+<div style="display:flex;flex-direction:column;line-height:1.3;min-width:0"><b style="font-weight:700;font-size:15px">Tim KIN</b><span style="font-size:13px;color:#C4CEDB">Konsultasi awal gratis</span></div>
+<button class="cs-x" id="cs-close" type="button" aria-label="Tutup"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+</div>
+<div style="padding:18px 16px 16px;display:flex;flex-direction:column;gap:12px">
+<b id="cs-title" style="font-weight:800;font-size:18px;line-height:1.3">Ada yang ingin ditanyakan?</b>
+<p id="cs-body" style="margin:0;color:#3C4859;font-size:15px;line-height:1.55">Ceritakan usaha Anda, kami bantu jelaskan cara kerja booking otomatis lewat WhatsApp. Konsultasi awal gratis.</p>
+<a class="btn-red" id="cs-cta" href="https://wa.me/6289637464523" style="display:flex;align-items:center;justify-content:center;min-height:48px;padding:0 20px;background:#D3303F;color:#FFFFFF;font-weight:700;text-decoration:none;border-radius:999px">Tanya lewat WhatsApp</a>
+</div>
+</div>
+<button class="cs-fab" id="cs-fab" type="button" aria-label="Chat dengan KIN lewat WhatsApp" aria-expanded="false" aria-controls="cs-pop"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 20.5l1.7-5.2A8.5 8.5 0 1 1 21 11.5z"></path><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8c-.8-.4-1.6-1.2-2-2l.8-1-1-2z"></path></svg></button>
+</div>
 <script>
 (function(){
   var btn=document.getElementById('menu-btn'),nav=document.getElementById('mobile-nav');
@@ -383,6 +430,53 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{ou
   }
   [nama,wa,usaha].forEach(function(el){el.addEventListener('input',upd);});
   upd();
+})();
+
+/* slider contoh percakapan */
+(function(){
+  var s=document.getElementById('sl'),p=document.getElementById('sl-prev'),n=document.getElementById('sl-next');
+  var dots=[].slice.call(document.querySelectorAll('.sl-dot'));
+  if(!s)return;
+  var calm=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function cur(){return Math.round(s.scrollLeft/s.clientWidth);}
+  function go(i){i=Math.max(0,Math.min(dots.length-1,i));s.scrollTo({left:i*s.clientWidth,behavior:calm?'auto':'smooth'});}
+  function upd(){var i=cur();dots.forEach(function(d,k){d.setAttribute('aria-current',k===i?'true':'false');});p.disabled=i<=0;n.disabled=i>=dots.length-1;}
+  p.addEventListener('click',function(){go(cur()-1);});
+  n.addEventListener('click',function(){go(cur()+1);});
+  dots.forEach(function(d,k){d.addEventListener('click',function(){go(k);});});
+  s.addEventListener('scroll',function(){window.requestAnimationFrame(upd);},{passive:true});
+  window.addEventListener('resize',upd);
+  upd();
+})();
+
+/* chat pop-up WhatsApp */
+(function(){
+  var fab=document.getElementById('cs-fab'),pop=document.getElementById('cs-pop'),x=document.getElementById('cs-close');
+  var ti=document.getElementById('cs-title'),bo=document.getElementById('cs-body'),cta=document.getElementById('cs-cta');
+  var BASE='https://wa.me/6289637464523?text=';
+  var M={
+    umum:{t:'Ada yang ingin ditanyakan?',b:'Ceritakan usaha Anda, kami bantu jelaskan cara kerja booking otomatis lewat WhatsApp. Konsultasi awal gratis.',m:'Halo KIN, saya ingin tanya dulu soal booking otomatis untuk usaha saya.'},
+    paket:{t:'Bingung pilih paket?',b:'Ceritakan jenis usaha Anda, kami bantu pilihkan paket yang paling pas. Konsultasi awal gratis.',m:'Halo KIN, saya bingung pilih paket. Boleh tanya dulu?'}
+  };
+  function isi(k){var d=M[k]||M.umum;ti.textContent=d.t;bo.textContent=d.b;cta.href=BASE+encodeURIComponent(d.m);}
+  function buka(k){isi(k);pop.hidden=false;fab.setAttribute('aria-expanded','true');}
+  function tutup(){pop.hidden=true;fab.setAttribute('aria-expanded','false');}
+  fab.addEventListener('click',function(){pop.hidden?buka('umum'):tutup();});
+  x.addEventListener('click',tutup);
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!pop.hidden)tutup();});
+  var sudah=false;try{sudah=sessionStorage.getItem('kinCs')==='1';}catch(e){}
+  function otomatis(k){
+    if(sudah||!pop.hidden)return;
+    sudah=true;try{sessionStorage.setItem('kinCs','1');}catch(e){}
+    buka(k);
+  }
+  setTimeout(function(){otomatis('umum');},10000);
+  var tgt=document.querySelector('.paket-row');
+  if(tgt&&'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){otomatis('paket');io.disconnect();}});},{threshold:.4});
+    io.observe(tgt);
+  }
+  isi('umum');
 })();
 </script>
 </body>

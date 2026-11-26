@@ -12,10 +12,10 @@ CREATE TABLE detail_transaksi(detail_id INTEGER PRIMARY KEY,transaksi_id INTEGER
 CREATE TABLE pengaturan(kunci TEXT PRIMARY KEY,nilai TEXT);
 INSERT INTO meja(kapasitas)VALUES(2),(2),(4),(4),(4),(6);
 INSERT INTO menu(nama_menu,harga,kategori,stok)VALUES('Kopi Susu Aren',18000,'Minuman',50),('Americano',15000,'Minuman',50),('Es Teh',8000,'Minuman',80),('Roti Bakar',17000,'Makanan',20);`;
-function muat(bytes){db=new SQL.Database(bytes);db.run('PRAGMA foreign_keys=ON');
- if(bytes&&!q("SELECT 1 FROM pragma_table_info('meja') WHERE name='aktif'").length)db.run('ALTER TABLE meja ADD COLUMN aktif INTEGER NOT NULL DEFAULT 1')}
 export function q(sql,p=[]){const s=db.prepare(sql),h=[];s.bind(p);while(s.step())h.push(s.getAsObject());s.free();return h}
 export const run=(sql,p)=>db.run(sql,p);
+function muat(bytes){db=new SQL.Database(bytes);db.run('PRAGMA foreign_keys=ON');
+ if(bytes&&!q("SELECT 1 FROM pragma_table_info('meja') WHERE name='aktif'").length)db.run('ALTER TABLE meja ADD COLUMN aktif INTEGER NOT NULL DEFAULT 1')}
 export const ekspor=()=>{const b=db.export();db.run('PRAGMA foreign_keys=ON');return b};
 const simpan=()=>{const b=ekspor();return idb('readwrite',s=>s.put(b,'db'))};
 export async function init(){SQL=await initSqlJs({locateFile:f=>CDN+f});const b=await idb('readonly',s=>s.get('db'));muat(b);if(!b){db.run(SKEMA);await simpan()}}

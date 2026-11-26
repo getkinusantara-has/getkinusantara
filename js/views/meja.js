@@ -1,0 +1,4 @@
+import {q,run,tx} from '../db.js';import {coba} from '../app.js';
+export default function view(el){el.innerHTML=`<p>Ketuk meja terisi untuk mengosongkannya.</p><div class="grid">${q('SELECT * FROM meja').map(m=>`<button data-id="${m.meja_id}" class="${m.status_okupansi==='TERISI'?'isi':''}">Meja ${m.meja_id}<br>${m.kapasitas} kursi<br><b>${m.status_okupansi}</b></button>`).join('')}</div><p><button id="baru">Tambah meja</button></p>`;
+ el.querySelectorAll('[data-id]').forEach(b=>b.onclick=()=>{if(b.className&&confirm('Kosongkan meja ini?'))coba(async()=>{await tx(()=>run("UPDATE meja SET status_okupansi='KOSONG' WHERE meja_id=?",[+b.dataset.id]));view(el)})});
+ el.querySelector('#baru').onclick=()=>{const n=Math.floor(+prompt('Jumlah kursi?'));if(n>0)coba(async()=>{await tx(()=>run('INSERT INTO meja(kapasitas)VALUES(?)',[n]));view(el)})}}

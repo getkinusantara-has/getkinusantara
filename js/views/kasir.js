@@ -7,7 +7,7 @@ export default function view(el){
   el.querySelector('#baru').onclick=()=>{hasil=null;view(el)};
   return}
  const menu=q('SELECT * FROM menu WHERE status_aktif=1 ORDER BY kategori,nama_menu');
- const semua=q('SELECT * FROM meja ORDER BY meja_id');
+ const semua=q('SELECT * FROM meja WHERE aktif=1 ORDER BY meja_id');
  if(meja&&!semua.some(m=>String(m.meja_id)===String(meja)&&m.status_okupansi==='KOSONG'))meja='';
  for(const id of k.keys())if(!menu.some(m=>m.menu_id===id))k.delete(id);
  const isi=[...k].map(([id,n])=>({...menu.find(m=>m.menu_id===id),n}));
